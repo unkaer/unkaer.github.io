@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个热衷分享有趣技术的小站，记录一些学习使用过的技术，并分享出来。尽可能的写的详细，少走一些坑，因为自己一步步学过来找到的资料都不是完整的、一条龙式的。"><meta name="keywords" content="技术,有趣,IT"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=233"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=233"><link rel="Shortcut Icon" href="https://gitee.com/Unkaer/blog/raw/master/images/favicon.webp"><link rel="bookmark" href="https://gitee.com/Unkaer/blog/raw/master/images/favicon.webp"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><script data-ad-client="ca-pub-9517454423154476" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script script type="text/javascript" src="/js/clicklove.js"></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/gitalk/dist/gitalk.css?v=233"><title>google drive无限网盘 | Z7的小站</title><meta name="generator" content="Hexo 4.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">google drive无限网盘</h1><a id="logo" href="/.">Z7的小站</a><p class="description">一个分享有趣技术的小站</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/wp/"><i class="fa fa-empty"> 网盘</i></a><a href="http://jx.unkaer.cf/" target="_blank" rel="noopener"><i class="fa fa-xie"> 在线视频站</i></a><a href="/guestbook/"><i class="fa fa-commt"> 留言</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/web/"><i class="fa fa-biao"> 导航</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">google drive无限网盘</h1><div class="post-meta"><a href="/google-drive.html#comments" class="comment-count"></a><p><span class="date">04 11，2020</span><span><a href="/categories/%E6%8A%80%E6%9C%AF/" class="category">技术</a></span></p></div><div class="post-content"><p>google drive无限网盘，配合cloudflare高速下载，访问。</p>
+<hr>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>当然你首先要有Google和<a href="https://dash.cloudflare.com/" target="_blank" rel="noopener">cloudflare</a>账号，自行注册。</p>
+<h2 id="使用限制"><a href="#使用限制" class="headerlink" title="使用限制"></a>使用限制</h2><p>cloudflare wokers一天10万请求限制<br>google drive 下载10T/24h（大佬说的）<br>google api 调用限制</p>
+<h1 id="注册Google无限网盘"><a href="#注册Google无限网盘" class="headerlink" title="注册Google无限网盘"></a>注册Google无限网盘</h1><p>提供几个个注册网址,注册要多等一会儿，不要重复提交<br>网上一搜一大把。</p>
+<p><a href="https://gd.zxd.workers.dev/" target="_blank" rel="noopener">无限网盘注册1</a><br><a href="https://gdrive.zppcw.cn/" target="_blank" rel="noopener">无限网盘注册2</a><br><a href="https://gd.404edu.workers.dev/" target="_blank" rel="noopener">无限网盘注册3</a></p>
+<p><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411090438.webp" alt="无限网盘注册"></p>
+<h1 id="rclone获取账号-opn登录"><a href="#rclone获取账号-opn登录" class="headerlink" title="rclone获取账号 opn登录"></a>rclone获取账号 opn登录</h1><h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>需要 真·全局代理 ，否则最后一步获取信息会失败。我注册时使用 <code>ShadowsocksR</code> 和 <code>v2rayN</code> 均失败，最后用 <code>SSTap</code> 成功。或者利用 <code>VPS</code> 获取登录信息也可以。<br>附上两个免费临时使用的 <code>VPS</code> </p>
+<ul>
+<li>[ssh.cloud.google]<a href="https://ssh.cloud.google.com/" target="_blank" rel="noopener">https://ssh.cloud.google.com/</a></li>
+<li>[ide.goorm]<a href="https://ide.goorm.io/" target="_blank" rel="noopener">https://ide.goorm.io/</a></li>
+</ul>
+<h2 id="安装-rclone-对应的客户端"><a href="#安装-rclone-对应的客户端" class="headerlink" title="安装 rclone 对应的客户端"></a>安装 <code>rclone</code> 对应的客户端</h2><ol>
+<li>下载rclone客户端</li>
+</ol>
+<p>下载网址<a href="https://rclone.org/downloads/" target="_blank" rel="noopener">rclone客户端</a><br>下载太慢，附上win64位客户端</p>
+<ul>
+<li><a href="https://lanzous.com/ib7x7le" target="_blank" rel="noopener">蓝奏云rclone-v1.51.0-windows-amd64.zip</a></li>
+</ul>
+<p><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411093201.webp" alt="rclone下载"></p>
+<ol start="2">
+<li><p>解压到任意目录, 文件管理器目录栏中输入 <code>cmd</code> 启动命令行,<br>输入 <code>rclone config</code> 进行配置</p>
+</li>
+<li><p>新建配置, 选择 <code>n</code> ,然后给配置随便取一个名字</p>
+<pre><code class="cmd">e) Edit existing remote
+n) New remote
+d) Delete remote
+r) Rename remote
+c) Copy remote
+s) Set configuration password
+q) Quit config
+n/s/q&gt; n
+name&gt; goole drive </code></pre>
+</li>
+<li><p>选择 <code>13</code> <code>Google Drive</code></p>
+<pre><code class="cmd">.....
+13 / Google Drive
+\ &quot;drive&quot;
+......
+Storage&gt; 13</code></pre>
+</li>
+<li><p>输入应用 client_id client_secret</p>
+</li>
+</ol>
+<ul>
+<li>可直接 <code>回车</code> 用 rclone 官方内置的项目，于别人共用Google API可能会很慢 </li>
+<li>自行创建Google项目,（推荐，Google API调研上限，自用肯定用不完）<pre><code class="cmd">Google Application Client Id
+Setting your own is recommended.
+See https://rclone.org/drive/#making-your-own-client-id for how to create your own.
+If you leave this blank, it will use an internal key which is low performance.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+client_id&gt;
+Google Application Client Secret
+Setting your own is recommended.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+client_secret&gt;</code></pre>
+<h3 id="创建Google项目：（可跳过）"><a href="#创建Google项目：（可跳过）" class="headerlink" title="创建Google项目：（可跳过）"></a>创建Google项目：（可跳过）</h3>如果用 rclone 官方内置的项目,跳过本步骤</li>
+</ul>
+<ol>
+<li><p>登录 <a href="https://console.developers.google.com/" target="_blank" rel="noopener">Google API</a></p>
+</li>
+<li><p>新建项目 取个名称 创建<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411101500.webp" alt=""></p>
+</li>
+<li><p>左上角切换到你刚刚创建的项目</p>
+</li>
+<li><p>左侧栏切换到到 OAuth 同意屏幕  选择 内部、外部 都可以  然后给应用随便取一个名字 保存<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411101656.webp" alt=""></p>
+</li>
+<li><p>访问项目凭据 </p>
+</li>
+</ol>
+<p>创建凭据 选择 OAuth 客户端ID<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411100946.webp" alt=""></p>
+<p>选择其他<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411100445.webp" alt="OAuth 客户端ID"></p>
+<p>保存OAuth 客户端ID(即client_id)和密钥(即client_secret)<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411100711.webp" alt="OAuth 客户端ID和密钥"></p>
+<ol start="6">
+<li><p>继续配置rclone, 允许rclone的权限，全部权限 选择 <code>1</code></p>
+<pre><code class="cmd">Scope that rclone should use when requesting access from drive.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+Choose a number from below, or type in your own value
+1 / Full access all files, excluding Application Data Folder.
+\ &quot;drive&quot;
+2 / Read-only access to file metadata and file contents.
+\ &quot;drive.readonly&quot;
+/ Access to files created by rclone only.
+3 | These are visible in the drive website.
+| File authorization is revoked when the user deauthorizes the app.
+\ &quot;drive.file&quot;
+/ Allows read and write access to the Application Data folder.
+4 | This is not visible in the drive website.
+\ &quot;drive.appfolder&quot;
+/ Allows read-only access to file metadata but
+5 | does not allow any access to read or download file content.
+\ &quot;drive.metadata.readonly&quot;
+scope&gt; 1</code></pre>
+</li>
+<li><p>网盘根目录, 访问<a href="https://drive.google.com/drive/shared-drives" target="_blank" rel="noopener">Google共享云端硬盘</a> 访问自己的共享网盘的根目录,然后网址最后一段 字符就是 根目录地址 如图<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411102901.webp" alt=""></p>
+</li>
+</ol>
+<pre><code class="cmd">ID of the root folder
+Leave blank normally.
+
+Fill in to access &quot;Computers&quot; folders (see docs), or for rclone to use
+a non root folder as its starting point.
+
+Note that if this is blank, the first time rclone runs it will fill it
+in with the ID of the root folder.
+
+Enter a string value. Press Enter for the default (&quot;&quot;).
+root_folder_id&gt;xxxxx</code></pre>
+<ol start="8">
+<li><p>储存凭据JSON文件路径,默认即可，直接 <code>回车</code> </p>
+<pre><code class="cmd">Service Account Credentials JSON file path
+Leave blank normally.
+Needed only if you want use SA instead of interactive login.
+Enter a string value. Press Enter for the default (&quot;&quot;).
+service_account_file&gt;</code></pre>
+</li>
+<li><p>编辑高级配置,默认即可,不编辑配置,直接 <code>回车</code> </p>
+<pre><code class="cmd">Edit advanced config? (y/n)
+y) Yes
+n) No (default)
+y/n&gt; n</code></pre>
+</li>
+<li><p>远程配置,  重点 </p>
+</li>
+</ol>
+<ul>
+<li>如果是使用本地机获取 rclone 配置,默认自动配置，回打开网页授权即可。</li>
+<li>如果是使用 <code>vps</code> 获取,选择 <code>n</code> 手动获取,然后访问提供的网址<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411103847.webp" alt=""></li>
+</ul>
+<p>授权,将得到的 <code>verification code</code> 输入即可<br><img src="https://gitee.com/unkaer/blog/raw/master/images/material/20200411104150.webp" alt=""></p>
+<pre><code class="cmd">Remote config
+Use auto config?
+ * Say Y if not sure
+ * Say N if you are working on a remote or headless machine
+y) Yes (default)
+n) No
+y/n&gt;</code></pre>
+<ol start="11">
+<li><p>选择自己的网盘</p>
+<pre><code class="cmd">Choose a number from below, or type in your own value
+1 / xxxxxx
+\ &quot;xxxxxxxx&quot;
+Enter a Team Drive ID&gt; 1</code></pre>
+</li>
+<li><p>保存得到 的 client_id client_secret root_folder_id refresh_token</p>
+<pre><code class="cmd">[cfdrive]
+type = drive
+client_id = xxxxx
+client_secret = xxx
+scope = drive
+root_folder_id = xxx
+token = {&quot;access_token&quot;:&quot;xxxxxxxxxxx&quot;,&quot;token_type&quot;:&quot;Bearer&quot;,&quot;refresh_token&quot;:&quot;xxxxxxxxxxxx&quot;:&quot;2020-xx-xxTxx:xx:xx.xxxxxx+xx:xx&quot;}
+team_drive = 0AGb_5t1PlgFlUk9PVA</code></pre>
+</li>
+</ol>
+<h1 id="部署cloudflare-workers"><a href="#部署cloudflare-workers" class="headerlink" title="部署cloudflare workers"></a>部署cloudflare workers</h1><p><a href="https://workers.cloudflare.com/" target="_blank" rel="noopener">开始搭建</a><br>填写自己喜爱的二级域名然后创建worker</p>
+<p>进入<a href="https://github.com/donwa/goindex" target="_blank" rel="noopener">github项目</a> 的<a href="https://github.com/donwa/goindex/blob/master/index.js" target="_blank" rel="noopener">index.js</a> 复制代码。</p>
+<p>清除hello world示范代码后粘贴进去。然后修改开头的</p>
+<pre><code class="js">var authConfig = {
+    &quot;siteName&quot;: &quot;GoIndex&quot;, // 网站名称
+    &quot;root_pass&quot;: &quot;123456&quot;,  // 根目录密码，优先于.password
+    &quot;version&quot; : &quot;1.0.6&quot;, // 程序版本
+    &quot;theme&quot; : &quot;material&quot;, // material  classic 
+    &quot;client_id&quot;: &quot;xxxxx&quot;, //client_id
+    &quot;client_secret&quot;: &quot;xxxxxx&quot;,  //client_secret
+    &quot;refresh_token&quot;: &quot;&quot;, // 授权 token
+    &quot;root&quot;: &quot;root&quot; // 根目录ID</code></pre>
+<p>访问部署的cloudflare workers</p>
+<h1 id="后续使用"><a href="#后续使用" class="headerlink" title="后续使用"></a>后续使用</h1><h2 id="畅快使用"><a href="#畅快使用" class="headerlink" title="畅快使用"></a>畅快使用</h2><p>修改访问域名为自己的域名</p>
+<ul>
+<li><p>方法一<br>域名 <code>DNS</code> 接入cloudflare,域名管理页面 -&gt; workers -&gt;添加路由</p>
+</li>
+<li><p>方法二<br>域名 <code>CNAME</code> or <code>A</code> 接入cloudflare第三方,然后域名解析 <code>CNAME</code> 到 <code>workers</code> 项目</p>
+</li>
+</ul>
+<p>可参考<a href="https://zan7l.tk/2020/04/10/cloudflare-cdn/" target="_blank" rel="noopener">cloudflare自定义IP加速网站</a></p>
+<h2 id="Google网页版上传"><a href="#Google网页版上传" class="headerlink" title="Google网页版上传"></a>Google网页版上传</h2><p>上传文件，直接使用<a href="https://drive.google.com/" target="_blank" rel="noopener">网页版</a> 的，感觉还不错</p>
+<h2 id="cloudflare访问和下载"><a href="#cloudflare访问和下载" class="headerlink" title="cloudflare访问和下载"></a>cloudflare访问和下载</h2><p>访问 cloudflare workers 项目提供的网址即可</p>
+<h2 id="加密文件夹"><a href="#加密文件夹" class="headerlink" title="加密文件夹"></a>加密文件夹</h2><p>在某个文件夹下添加 <code>.password</code> 文件，里面写入密码，即可加密该文件夹。注意文件必须以 <code>UTF8NoBOM</code> 编码，且密码前后不能有空格或空行，Windows 下可通过以下方式生成：</p>
+<p>文件夹下按住 <code>Shift</code> 键的同时，鼠标右击文件夹空白处，选择 <code>在此处打开 Powershell 窗口(S)</code>，接着执行以下命令，其中 <code>1234</code> 便是密码。</p>
+<pre><code class="powershell">&#39;1234&#39; | Out-File -FilePath .password -Encoding ascii -NoNewline</code></pre>
+<p>然后将 <code>.password</code> 文件上传到要加密的文件夹</p>
+<h2 id="添加描述"><a href="#添加描述" class="headerlink" title="添加描述"></a>添加描述</h2><p>在某个文件夹下添加 <code>README.md</code> 文件，里面按照 <code>markdown</code> 格式写描述，打卡该文件夹网址时下方会有相关描述。</p>
+</div><div class="post-copyright"><blockquote><p>原文作者: ababwbq</p><p>原文链接: <a href="https://www.unkaer.cf/google-drive.html">https://www.unkaer.cf/google-drive.html</a></p><p>版权声明: 转载请注明出处(必须保留原文作者署名原文链接)</p></blockquote></div><div class="tags"><a href="/tags/%E7%BD%91%E7%9B%98/">网盘</a><a href="/tags/Google/">Google</a></div><div class="post-share"></div><div class="post-nav"><a href="/hexo-dplay.html" class="pre">hexo添加dplayer在线播放器</a><a href="/cloudflare-cdn.html" class="next">cloudflare自定义IP加速网站</a></div><div id="comments"><div id="container"><script type="text/javascript" src="https://unpkg.com/gitalk/dist/gitalk.min.js?v=233"></script><script type="text/javascript" src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js?v=233"></script><script>var gitalk = new Gitalk({
+  clientID: '12c9a2f9d0145ff826a5',
+  clientSecret: '15e9c456632be76c5df7239cfa58b4327d0fffb8',
+  repo: 'unkaer.github.io',
+  owner: 'unkaer',
+  admin: ['unkaer'],
+  id: md5(window.location.pathname),
+  distractionFreeMode: false,
+  language: 'zh-CN',
+  pagerDirection: 'last'
+})
+gitalk.render('container')</script></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备"><span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用限制"><span class="toc-text">使用限制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注册Google无限网盘"><span class="toc-text">注册Google无限网盘</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#rclone获取账号-opn登录"><span class="toc-text">rclone获取账号 opn登录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注意"><span class="toc-text">注意</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-rclone-对应的客户端"><span class="toc-text">安装 rclone 对应的客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建Google项目：（可跳过）"><span class="toc-text">创建Google项目：（可跳过）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署cloudflare-workers"><span class="toc-text">部署cloudflare workers</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后续使用"><span class="toc-text">后续使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#畅快使用"><span class="toc-text">畅快使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google网页版上传"><span class="toc-text">Google网页版上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cloudflare访问和下载"><span class="toc-text">cloudflare访问和下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加密文件夹"><span class="toc-text">加密文件夹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加描述"><span class="toc-text">添加描述</span></a></li></ol></li></ol></div><div class="about-widget"><a class="photo_background"><img src="https://gitee.com/Unkaer/blog/raw/master/images/material/20200129065505.webp"/></a><a href="/./about/" class="photo"><img src="https://gitee.com/Unkaer/blog/raw/master/images/portrait.webp"/></a><a class="text"><script>var r=parseInt(Math.floor(Math.random()*10)); arr=new Array(); arr[0]="生活不止眼前的枸杞,还有诗和远方"; arr[1]="世界上没有无缘无故的爱，也没有无缘无故的恨，却TM偏偏有无缘无故的胖！"; arr[2]="生活不止眼前的枸杞,还有诗和远方"; arr[3]="生活不止眼前的苟且，还有一辈子的苟且。"; arr[4]="悄悄地我吃了，正如我悄悄地胖。"; arr[5]="没有天生的高手，更没有永远的菜鸟"; arr[6]="我最大的缺点，就是缺点钱。"; arr[7]="可以不劳而获的，只有年纪和脂肪。"; arr[8]="选择比努力更重要，所以我选择不努力。"; arr[9]="谈钱伤感情，谈感情伤钱。";  document.write(arr[r]);</script></a></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/openwrt-xiaomi-r4a.html">小米RA4千兆版新手入坑指南</a></li><li class="post-list-item"><a class="post-list-link" href="/daan.html">答案助手</a></li><li class="post-list-item"><a class="post-list-link" href="/byhost.html">byet免费空间</a></li><li class="post-list-item"><a class="post-list-link" href="/music-heroku.html">heroku部署在线音乐站</a></li><li class="post-list-item"><a class="post-list-link" href="/phpstudy.html">phpstudy</a></li><li class="post-list-item"><a class="post-list-link" href="/jjwp.html">极简网盘</a></li><li class="post-list-item"><a class="post-list-link" href="/jx.html">XyPlayer4.0在线解析站，带后台</a></li><li class="post-list-item"><a class="post-list-link" href="/music.html">在线音乐播放</a></li><li class="post-list-item"><a class="post-list-link" href="/free.html">彩虹云免费虚拟主机</a></li><li class="post-list-item"><a class="post-list-link" href="/infinityfree-cloudflare.html">infinityfree免费空间绑定cloudflare免费CDN加速</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E7%AB%A0/">文章</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E8%B5%9A/">网赚</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6/">软件</a><span class="category-list-count">15</span></li></ul></div><div class="googlead-widget"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><!-- googlead01 --><ins style="display:block" data-ad-client="ca-pub-9517454423154476" data-ad-slot="1798098334" data-ad-format="auto" data-full-width-responsive="true" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/heroku/" style="font-size: 15px;">heroku</a> <a href="/tags/%E6%96%B9%E8%88%9F%EF%BC%9A%E7%94%9F%E5%AD%98%E8%BF%9B%E5%8C%96/" style="font-size: 15px;">方舟：生存进化</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/bluelake/" style="font-size: 15px;">bluelake</a> <a href="/tags/onedrive/" style="font-size: 15px;">onedrive</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/%E5%B1%80%E5%9F%9F%E7%BD%91/" style="font-size: 15px;">局域网</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/" style="font-size: 15px;">远程控制</a> <a href="/tags/Termux/" style="font-size: 15px;">Termux</a> <a href="/tags/%E7%BD%91%E9%80%9F/" style="font-size: 15px;">网速</a> <a href="/tags/VIP/" style="font-size: 15px;">VIP</a> <a href="/tags/%E8%A7%86%E9%A2%91/" style="font-size: 15px;">视频</a> <a href="/tags/kali/" style="font-size: 15px;">kali</a> <a href="/tags/233/" style="font-size: 15px;">233</a> <a href="/tags/aria2/" style="font-size: 15px;">aria2</a> <a href="/tags/wifi/" style="font-size: 15px;">wifi</a> <a href="/tags/arp/" style="font-size: 15px;">arp</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 15px;">脚本</a> <a href="/tags/%E5%85%8D%E8%B4%B9%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">免费空间</a> <a href="/tags/cloudflare/" style="font-size: 15px;">cloudflare</a> <a href="/tags/cdn/" style="font-size: 15px;">cdn</a> <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 15px;">科学上网</a> <a href="/tags/cyberpunk/" style="font-size: 15px;">cyberpunk</a> <a href="/tags/wallpaper/" style="font-size: 15px;">wallpaper</a> <a href="/tags/%E6%98%BE%E5%8D%A1/" style="font-size: 15px;">显卡</a> <a href="/tags/deepin/" style="font-size: 15px;">deepin</a> <a href="/tags/Ettercap/" style="font-size: 15px;">Ettercap</a> <a href="/tags/cms/" style="font-size: 15px;">cms</a> <a href="/tags/infinityfree/" style="font-size: 15px;">infinityfree</a> <a href="/tags/%E5%85%8D%E8%B4%B9/" style="font-size: 15px;">免费</a> <a href="/tags/%E4%BA%91%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">云空间</a> <a href="/tags/%E4%B8%8B%E8%BD%BD/" style="font-size: 15px;">下载</a> <a href="/tags/v2ray/" style="font-size: 15px;">v2ray</a> <a href="/tags/%E7%BD%91%E7%9B%98/" style="font-size: 15px;">网盘</a> <a href="/tags/%E8%A7%A3%E6%9E%90/" style="font-size: 15px;">解析</a> <a href="/tags/%E5%AF%86%E7%A0%81/" style="font-size: 15px;">密码</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 15px;">开源</a> <a href="/tags/libwebp/" style="font-size: 15px;">libwebp</a> <a href="/tags/webp/" style="font-size: 15px;">webp</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/mac/" style="font-size: 15px;">mac</a> <a href="/tags/MKOnlineMusicPlayer/" style="font-size: 15px;">MKOnlineMusicPlayer</a> <a href="/tags/openwrt/" style="font-size: 15px;">openwrt</a> <a href="/tags/phpstudy/" style="font-size: 15px;">phpstudy</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/ping/" style="font-size: 15px;">ping</a> <a href="/tags/%E8%BE%93%E5%85%A5%E6%B3%95/" style="font-size: 15px;">输入法</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 15px;">屏幕</a> <a href="/tags/ssh/" style="font-size: 15px;">ssh</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/vip/" style="font-size: 15px;">vip</a> <a href="/tags/%E4%BD%BF%E5%91%BD%E5%8F%AC%E5%94%A416/" style="font-size: 15px;">使命召唤16</a> <a href="/tags/%E5%9B%BE%E5%83%8F/" style="font-size: 15px;">图像</a> <a href="/tags/%E5%BE%AE%E4%BF%A1/" style="font-size: 15px;">微信</a> <a href="/tags/%E5%B0%8F%E5%8F%B7/" style="font-size: 15px;">小号</a> <a href="/tags/%E7%A0%B4%E8%A7%A3/" style="font-size: 15px;">破解</a> <a href="/tags/win10/" style="font-size: 15px;">win10</a> <a href="/tags/%E6%97%B6%E9%97%B4/" style="font-size: 15px;">时间</a> <a href="/tags/%E9%94%81%E5%B1%8F/" style="font-size: 15px;">锁屏</a> <a href="/tags/win7/" style="font-size: 15px;">win7</a> <a href="/tags/%E5%BE%AEPE%E5%B7%A5%E5%85%B7%E7%AE%B1/" style="font-size: 15px;">微PE工具箱</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/dplayer/" style="font-size: 15px;">dplayer</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">59</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">5</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://crazyzhang.cn" title="穗乃果 の 小窝 - GTA5小站" target="_blank">穗乃果 の 小窝 - GTA5小站</a><ul></ul><a href="https://www.sqlsec.com" title="国光" target="_blank">国光</a><ul></ul><a href="https://blog.daliansky.net" title="黑果小兵的部落" target="_blank">黑果小兵的部落</a><ul></ul><a href="https://chaooo.github.io/article/20161229.html" title="BlueLake博客主题的详细配置" target="_blank">BlueLake博客主题的详细配置</a><ul></ul><a href="https://unkaer.github.io" title="Z7的小站" target="_blank">Z7的小站</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p><span>Copyright &copy 2020 <a href="/." rel="nofollow">ababwbq.</a></span><span>ALL RIGHTS RESERVED.|<a rel="nofollow" target="_blank" href="https://tongji.baidu.com/web/10000045193/overview/index?siteId=14297073"> 网站统计</a></span></p><p><span><a id="sitetime"></a></span><script src="/js/settime.js"></script></p></div></div></div><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a051a5655f4a38112097d1a8d1dac208";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=233"></script><script type="text/javascript" src="/js/toctotop.js?v=233" async></script></body></html>

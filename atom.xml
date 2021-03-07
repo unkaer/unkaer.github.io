@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Z7的小站</title>
+  
+  <subtitle>一个分享有趣技术的小站</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://www.unkaer.cf/"/>
+  <updated>2021-03-07T13:49:10.858Z</updated>
+  <id>https://www.unkaer.cf/</id>
+  
+  <author>
+    <name>ababwbq</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>小米RA4千兆版新手入坑指南</title>
+    <link href="https://www.unkaer.cf/openwrt-xiaomi-r4a.html"/>
+    <id>https://www.unkaer.cf/openwrt-xiaomi-r4a.html</id>
+    <published>2021-03-07T10:45:37.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;云编译自己的小米RA4千兆版OpenWrt breed直刷固件，自定义个性插件&lt;/p&gt;
+&lt;p&gt;本想添加京东签到插件，于是就开始找资料，云编译R4A固件，结果遇到了各种问题，就有了本文章。&lt;/p&gt;
+&lt;h1 id=&quot;1-刷入不死breed&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="openwrt" scheme="https://www.unkaer.cf/tags/openwrt/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>答案助手</title>
+    <link href="https://www.unkaer.cf/daan.html"/>
+    <id>https://www.unkaer.cf/daan.html</id>
+    <published>2020-06-02T00:22:25.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;用 python 做得答案助手，题库接口来自 超星网课脚本 。&lt;br&gt;python运行效率太慢，又做了一个 go语言版。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>byet免费空间</title>
+    <link href="https://www.unkaer.cf/byhost.html"/>
+    <id>https://www.unkaer.cf/byhost.html</id>
+    <published>2020-05-03T08:50:02.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;hr&gt;
+&lt;h2 id=&quot;官网&quot;&gt;&lt;a href=&quot;#官网&quot; class=&quot;headerlink&quot; title=&quot;官网&quot;&gt;&lt;/a&gt;官网&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://byet.host/&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="免费空间" scheme="https://www.unkaer.cf/tags/%E5%85%8D%E8%B4%B9%E7%A9%BA%E9%97%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>heroku部署在线音乐站</title>
+    <link href="https://www.unkaer.cf/music-heroku.html"/>
+    <id>https://www.unkaer.cf/music-heroku.html</id>
+    <published>2020-05-02T08:02:15.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;MKOnlineMusicPlayer在线音乐项目php部署到heroku，同时学习一下heroku。&quot;&gt;&lt;a href=&quot;#MKOnlineMusicPlayer在线音乐项目php部署到heroku，同时学习一下heroku。&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="heroku" scheme="https://www.unkaer.cf/tags/heroku/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>phpstudy</title>
+    <link href="https://www.unkaer.cf/phpstudy.html"/>
+    <id>https://www.unkaer.cf/phpstudy.html</id>
+    <published>2020-05-01T08:01:55.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;PhpStudy国内12年老牌公益软件，集安全，高效，功能与一体，已获得全球用户认可安装，运维也高效。&lt;br&gt;支持一键LAMP,LNMP,集群,监控,网站,FTP,数据库,JAVA等100多项服务器管理功能。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;官网&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="软件" scheme="https://www.unkaer.cf/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="phpstudy" scheme="https://www.unkaer.cf/tags/phpstudy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>极简网盘</title>
+    <link href="https://www.unkaer.cf/jjwp.html"/>
+    <id>https://www.unkaer.cf/jjwp.html</id>
+    <published>2020-04-30T08:01:10.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;VFM2是一个轻量级文件管理与共享系统，支持多用户，可充当网盘程序，程序无需数据库&quot;&gt;&lt;a href=&quot;#VFM2是一个轻量级文件管理与共享系统，支持多用户，可充当网盘程序，程序无需数据库&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="网盘" scheme="https://www.unkaer.cf/tags/%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XyPlayer4.0在线解析站，带后台</title>
+    <link href="https://www.unkaer.cf/jx.html"/>
+    <id>https://www.unkaer.cf/jx.html</id>
+    <published>2020-04-29T08:01:26.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;整合解析接口到一个网站&quot;&gt;&lt;a href=&quot;#整合解析接口到一个网站&quot; class=&quot;headerlink&quot; title=&quot;整合解析接口到一个网站&quot;&gt;&lt;/a&gt;整合解析接口到一个网站&lt;/h2&gt;&lt;h3 id=&quot;首页&quot;&gt;&lt;a href=&quot;#首页&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="解析" scheme="https://www.unkaer.cf/tags/%E8%A7%A3%E6%9E%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在线音乐播放</title>
+    <link href="https://www.unkaer.cf/music.html"/>
+    <id>https://www.unkaer.cf/music.html</id>
+    <published>2020-04-28T08:01:17.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;MKOnlineMusicPlayer 是一款开源的基于 &lt;code&gt;Meting&lt;/code&gt; 的在线音乐播放器。具有音乐搜索、播放、下载、歌词同步显示、个人网易云音乐播放列表同步等功能。&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="MKOnlineMusicPlayer" scheme="https://www.unkaer.cf/tags/MKOnlineMusicPlayer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>彩虹云免费虚拟主机</title>
+    <link href="https://www.unkaer.cf/free.html"/>
+    <id>https://www.unkaer.cf/free.html</id>
+    <published>2020-04-27T08:02:50.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;彩虹云提供免费虚拟主机&quot;&gt;&lt;a href=&quot;#彩虹云提供免费虚拟主机&quot; class=&quot;headerlink&quot; title=&quot;彩虹云提供免费虚拟主机&quot;&gt;&lt;/a&gt;彩虹云提供免费虚拟主机&lt;/h2&gt;&lt;p&gt;官网&lt;br&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="免费" scheme="https://www.unkaer.cf/tags/%E5%85%8D%E8%B4%B9/"/>
+    
+      <category term="云空间" scheme="https://www.unkaer.cf/tags/%E4%BA%91%E7%A9%BA%E9%97%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>infinityfree免费空间绑定cloudflare免费CDN加速</title>
+    <link href="https://www.unkaer.cf/infinityfree-cloudflare.html"/>
+    <id>https://www.unkaer.cf/infinityfree-cloudflare.html</id>
+    <published>2020-04-26T06:24:15.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;infinityfree-免费空间绑定-cloudflare-免费-CDN-加速遇到的一些坑&quot;&gt;&lt;a href=&quot;#infinityfree-免费空间绑定-cloudflare-免费-CDN-加速遇到的一些坑&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="cloudflare" scheme="https://www.unkaer.cf/tags/cloudflare/"/>
+    
+      <category term="infinityfree" scheme="https://www.unkaer.cf/tags/infinityfree/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>免费搭建视频cms网址</title>
+    <link href="https://www.unkaer.cf/fcms.html"/>
+    <id>https://www.unkaer.cf/fcms.html</id>
+    <published>2020-04-23T10:57:58.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;hr&gt;
+&lt;h1 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="cms" scheme="https://www.unkaer.cf/tags/cms/"/>
+    
+      <category term="infinityfree" scheme="https://www.unkaer.cf/tags/infinityfree/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>副本altered：给我讲个故事，一个结局不是死亡和悲剧的故事</title>
+    <link href="https://www.unkaer.cf/altered.html"/>
+    <id>https://www.unkaer.cf/altered.html</id>
+    <published>2020-04-20T11:21:48.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;记录这几天看副本，其中讲的一段故事，被触动到了&lt;/p&gt;
+&lt;h1 id=&quot;第一段台词&quot;&gt;&lt;a href=&quot;#第一段台词&quot; class=&quot;headerlink&quot; title=&quot;第一段台词&quot;&gt;&lt;/a&gt;第一段台词&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;s01e10
+        
+      
+    
+    </summary>
+    
+    
+      <category term="文章" scheme="https://www.unkaer.cf/categories/%E6%96%87%E7%AB%A0/"/>
+    
+    
+      <category term="233" scheme="https://www.unkaer.cf/tags/233/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Aria2 好用的 `Docker` 容器镜像安装教程</title>
+    <link href="https://www.unkaer.cf/aria2.html"/>
+    <id>https://www.unkaer.cf/aria2.html</id>
+    <published>2020-04-17T01:25:46.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;http://aria2.github.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Aria2&lt;/a&gt; 是支持 BT、磁力、HTTP、FTP 等下载协议的下载工具，常用做离线下载的服务端。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="下载" scheme="https://www.unkaer.cf/tags/%E4%B8%8B%E8%BD%BD/"/>
+    
+      <category term="aria2" scheme="https://www.unkaer.cf/tags/aria2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>赛博朋克2077倒计时</title>
+    <link href="https://www.unkaer.cf/cyberpunk.html"/>
+    <id>https://www.unkaer.cf/cyberpunk.html</id>
+    <published>2020-04-14T05:16:02.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;本该是在学校里期待游玩赛博朋克2077的日子。但，他跳票了，加上众所周知的原因。分享一下wallpaper制作赛博朋克2077跳票发售倒计时的教程。&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="软件" scheme="https://www.unkaer.cf/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="cyberpunk" scheme="https://www.unkaer.cf/tags/cyberpunk/"/>
+    
+      <category term="wallpaper" scheme="https://www.unkaer.cf/tags/wallpaper/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>keepass免费开源的密码管理工具</title>
+    <link href="https://www.unkaer.cf/keepass.html"/>
+    <id>https://www.unkaer.cf/keepass.html</id>
+    <published>2020-04-14T00:20:45.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;由于注册的小号太多了，所以找了一款密码管理工具来帮我记录。安全性应该是没问题的。&quot;&gt;&lt;a href=&quot;#由于注册的小号太多了，所以找了一款密码管理工具来帮我记录。安全性应该是没问题的。&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="软件" scheme="https://www.unkaer.cf/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="密码" scheme="https://www.unkaer.cf/tags/%E5%AF%86%E7%A0%81/"/>
+    
+      <category term="开源" scheme="https://www.unkaer.cf/tags/%E5%BC%80%E6%BA%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使命召唤：战区入坑指南</title>
+    <link href="https://www.unkaer.cf/warzone.html"/>
+    <id>https://www.unkaer.cf/warzone.html</id>
+    <published>2020-04-13T14:56:49.000Z</published>
+    <updated>2021-03-07T13:49:10.862Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一款免费吃鸡游戏，80多个G的。使命召唤16&quot;&gt;&lt;a href=&quot;#一款免费吃鸡游戏，80多个G的。使命召唤16&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="游戏" scheme="https://www.unkaer.cf/categories/%E6%B8%B8%E6%88%8F/"/>
+    
+    
+      <category term="使命召唤16" scheme="https://www.unkaer.cf/tags/%E4%BD%BF%E5%91%BD%E5%8F%AC%E5%94%A416/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>英语听力转文本</title>
+    <link href="https://www.unkaer.cf/totext.html"/>
+    <id>https://www.unkaer.cf/totext.html</id>
+    <published>2020-04-12T10:07:06.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;为了应对英语听力，学习英语是不存在的，所以有了该脚本。&quot;&gt;&lt;a href=&quot;#为了应对英语听力，学习英语是不存在的，所以有了该脚本。&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="python" scheme="https://www.unkaer.cf/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo添加dplayer在线播放器</title>
+    <link href="https://www.unkaer.cf/hexo-dplay.html"/>
+    <id>https://www.unkaer.cf/hexo-dplay.html</id>
+    <published>2020-04-11T13:40:10.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;hexo添加dplay在线视频播放器，支持弹幕、截图、字幕、倍速播放。&quot;&gt;&lt;a href=&quot;#hexo添加dplay在线视频播放器，支持弹幕、截图、字幕、倍速播放。&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="hexo" scheme="https://www.unkaer.cf/tags/hexo/"/>
+    
+      <category term="dplayer" scheme="https://www.unkaer.cf/tags/dplayer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>google drive无限网盘</title>
+    <link href="https://www.unkaer.cf/google-drive.html"/>
+    <id>https://www.unkaer.cf/google-drive.html</id>
+    <published>2020-04-11T03:10:22.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;google drive无限网盘，配合cloudflare高速下载，访问。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h1&gt;&lt;p&gt;当然你首先要有Google和&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="网盘" scheme="https://www.unkaer.cf/tags/%E7%BD%91%E7%9B%98/"/>
+    
+      <category term="Google" scheme="https://www.unkaer.cf/tags/Google/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cloudflare自定义IP加速网站</title>
+    <link href="https://www.unkaer.cf/cloudflare-cdn.html"/>
+    <id>https://www.unkaer.cf/cloudflare-cdn.html</id>
+    <published>2020-04-10T07:55:33.000Z</published>
+    <updated>2021-03-07T13:49:10.858Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;hr&gt;
+&lt;h1 id=&quot;cloudflare自定义IP加速网站&quot;&gt;&lt;a href=&quot;#cloudflare自定义IP加速网站&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="https://www.unkaer.cf/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="cloudflare" scheme="https://www.unkaer.cf/tags/cloudflare/"/>
+    
+      <category term="cdn" scheme="https://www.unkaer.cf/tags/cdn/"/>
+    
+  </entry>
+  
+</feed>

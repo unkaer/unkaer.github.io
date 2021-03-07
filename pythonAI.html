@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个热衷分享有趣技术的小站，记录一些学习使用过的技术，并分享出来。尽可能的写的详细，少走一些坑，因为自己一步步学过来找到的资料都不是完整的、一条龙式的。"><meta name="keywords" content="技术,有趣,IT"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=233"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=233"><link rel="Shortcut Icon" href="https://gitee.com/Unkaer/blog/raw/master/images/favicon.webp"><link rel="bookmark" href="https://gitee.com/Unkaer/blog/raw/master/images/favicon.webp"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><script data-ad-client="ca-pub-9517454423154476" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script script type="text/javascript" src="/js/clicklove.js"></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/gitalk/dist/gitalk.css?v=233"><title>python调用百度语音 | Z7的小站</title><meta name="generator" content="Hexo 4.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">python调用百度语音</h1><a id="logo" href="/.">Z7的小站</a><p class="description">一个分享有趣技术的小站</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/wp/"><i class="fa fa-empty"> 网盘</i></a><a href="http://jx.unkaer.cf/" target="_blank" rel="noopener"><i class="fa fa-xie"> 在线视频站</i></a><a href="/guestbook/"><i class="fa fa-commt"> 留言</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/web/"><i class="fa fa-biao"> 导航</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">python调用百度语音</h1><div class="post-meta"><a href="/pythonAI.html#comments" class="comment-count"></a><p><span class="date">02 06，2020</span><span><a href="/categories/%E6%8A%80%E6%9C%AF/" class="category">技术</a></span></p></div><div class="post-content"><p>用Python调用百度语音，学习 python 百度语音识别和合成。</p>
+<hr>
+<h1 id="用-Python-调用百度语音"><a href="#用-Python-调用百度语音" class="headerlink" title="用 Python 调用百度语音"></a>用 Python 调用百度语音</h1><p>学习 python百度语音识别和合成</p>
+<h2 id="一、整体结构"><a href="#一、整体结构" class="headerlink" title="一、整体结构"></a>一、整体结构</h2><p><code>SpeechRecognition（录音）--&gt; 百度语音（Speech-to-Text）--&gt; 百度语音（Text-to-Speech)--&gt; PyAudio（音频播放）</code></p>
+<p>循环</p>
+<h2 id="二、SpeechRecognition"><a href="#二、SpeechRecognition" class="headerlink" title="二、SpeechRecognition"></a>二、SpeechRecognition</h2><p>SpeechRecogintion 是 Python 的一个语音识别框架。</p>
+<p>本项目里的语音识别及合成用的是百度的开放服务，所以只是需要 SpeechRecogintion 的录音功能。<br>它可以检测语音中的停顿自动终止录音并保存，比 PyAudio 更人性化（代码写起来也更简单）。</p>
+<h3 id="安装-SpeechRecognition"><a href="#安装-SpeechRecognition" class="headerlink" title="安装 SpeechRecognition"></a>安装 SpeechRecognition</h3><pre><code class="bash">pip install SpeechRecognition</code></pre>
+<h3 id="录音代码"><a href="#录音代码" class="headerlink" title="录音代码"></a>录音代码</h3><pre><code class="python">import speech_recognition as sr
+
+def rec(rate=16000):
+    r = sr.Recognizer()
+    with sr.Microphone(sample_rate=rate) as source:
+        print(&quot;please say something&quot;)
+        audio = r.listen(source)
+
+    with open(&quot;recording.wav&quot;, &quot;wb&quot;) as f:
+        f.write(audio.get_wav_data())
+
+rec()</code></pre>
+<p>从系统麦克风拾取音频数据，采样率为 16000（貌似百度语音 API 最高就支持到 16k 的采样率）。<br>之后把采集到的音频数据以 wav 格式保存在当前目录下的 recording.wav 文件中，供后面的程序使用。</p>
+<p>录音完成后，可以找到录好的音频文件试听一下效果。</p>
+<h2 id="三、百度语音（STT）"><a href="#三、百度语音（STT）" class="headerlink" title="三、百度语音（STT）"></a>三、百度语音（STT）</h2><p>百度语音是百度云 AI 开放平台提供的支持语音识别和语音合成的服务，注册以后就可以直接访问它的 REST API 了，并且有向普通用户提供免费的调用额度。</p>
+<h3 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h3><p>注册成功以后，进入语音服务的控制台创建一个新的应用，记下自己的 AppID、API Key 和 Secret Key。</p>
+<h3 id="安装百度API："><a href="#安装百度API：" class="headerlink" title="安装百度API："></a>安装百度API：</h3><pre><code class="bash">pip install baidu-aip</code></pre>
+<h3 id="语音识别代码如下（代码中的-Key-替换成自己的）："><a href="#语音识别代码如下（代码中的-Key-替换成自己的）：" class="headerlink" title="语音识别代码如下（代码中的 Key 替换成自己的）："></a>语音识别代码如下（代码中的 Key 替换成自己的）：</h3><pre><code class="python">from aip import AipSpeech
+
+APP_ID = &#39;Your AppID&#39;
+API_KEY = &#39;Your API Key&#39;
+SECRET_KEY = &#39;Your Secret Key&#39;
+
+client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
+
+def listen():
+    with open(&#39;recording.wav&#39;, &#39;rb&#39;) as f:
+        audio_data = f.read()
+
+    result = client.asr(audio_data, &#39;wav&#39;, 16000, {
+        &#39;dev_pid&#39;: 1536,
+    })
+
+    result_text = result[&quot;result&quot;][0]
+
+    print(&quot;you said: &quot; + result_text)
+
+    return result_text
+
+listen()</code></pre>
+<p>简单来说，将 SpeechRecognition 录制的音频上传至百度语音的服务，返回识别后的文本结果并输出。</p>
+<h2 id="四、百度语音（TTS）"><a href="#四、百度语音（TTS）" class="headerlink" title="四、百度语音（TTS）"></a>四、百度语音（TTS）</h2><p>其实大部分系统都有内置的 TTS （即文本转语音）引擎，如 MacOS 的 say 命令，只不过其中有很多都显得太“机械”，呃，缺少“人情味儿”。。。</p>
+<p>百度的 TTS 引擎语音效果听起来还是很不错的（4 号选手度丫丫）。</p>
+<h3 id="测试代码如下："><a href="#测试代码如下：" class="headerlink" title="测试代码如下："></a>测试代码如下：</h3><pre><code class="python">from aip import AipSpeech
+
+APP_ID = &#39;Your AppID&#39;
+API_KEY = &#39;Your API Key&#39;
+SECRET_KEY = &#39;Your Secret Key&#39;
+
+client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
+
+def speak(text=&quot;&quot;):
+    result = client.synthesis(text, &#39;zh&#39;, 1, {
+        &#39;spd&#39;: 4,
+        &#39;vol&#39;: 5,
+        &#39;per&#39;: 4,
+    })
+
+    if not isinstance(result, dict):
+        with open(&#39;audio.mp3&#39;, &#39;wb&#39;) as f:
+            f.write(result)
+speak(&quot;你好啊&quot;)</code></pre>
+<p>就是把需要转换成语音的文本内容上传，再将返回的数据保存在本地。貌似只能生成 mp3 格式。</p>
+<h2 id="五、PyAudio-播放"><a href="#五、PyAudio-播放" class="headerlink" title="五、PyAudio 播放"></a>五、PyAudio 播放</h2><h3 id="安装-PyAudio"><a href="#安装-PyAudio" class="headerlink" title="安装 PyAudio"></a>安装 PyAudio</h3><ul>
+<li><p>Windows<br>到官网<br><a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio" target="_blank" rel="noopener">https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio</a><br>下载对应版本<br>PyAudio-0.2.11-cp38-cp38-win32.whl<br>cp38代表python版本号3.8<br>下载完成后安装</p>
+<pre><code class="bash">pip install PyAudio-0.2.11-cp38-cp38-win32.whl</code></pre>
+</li>
+<li><p>Linux</p>
+<pre><code class="bash">apt install python3-pyaudio</code></pre>
+</li>
+</ul>
+<p>没找到 Python 播放 MP3 的合适的方法，所以用sox 命令将 MP3 转为 wav 格式，再用 PyAudio 播放。</p>
+<h3 id="安装-sox"><a href="#安装-sox" class="headerlink" title="安装 sox"></a>安装 sox</h3><p>SoX 是一个强大的跨平台的音频处理工具</p>
+<ul>
+<li><p>Windows<br><a href="http://sox.sourceforge.net/" target="_blank" rel="noopener">sox官网</a>下载<br>安装目录编入环境变量</p>
+</li>
+<li><p>Linux</p>
+<pre><code class="bash">sudo apt-get install sox libsox-fmt-mp3</code></pre>
+</li>
+</ul>
+<h3 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h3><pre><code class="python">import pyaudio
+import wave
+import os
+import time
+
+def play():
+    os.system(&#39;sox audio.mp3 audio.wav&#39;)
+    wf = wave.open(&#39;audio.wav&#39;, &#39;rb&#39;)
+    p = pyaudio.PyAudio()
+
+    def callback(in_data, frame_count, time_info, status):
+        data = wf.readframes(frame_count)
+        return (data, pyaudio.paContinue)
+
+    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                    channels=wf.getnchannels(),
+                    rate=wf.getframerate(),
+                    output=True,
+                    stream_callback=callback)
+
+    stream.start_stream()
+
+    while stream.is_active():
+        time.sleep(0.1)
+
+    stream.stop_stream()
+    stream.close()
+    wf.close()
+
+    p.terminate()
+
+play()</code></pre>
+<h2 id="六、最终代码"><a href="#六、最终代码" class="headerlink" title="六、最终代码"></a>六、最终代码</h2><p>上述代码整合到一起</p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+
+# 录音
+import speech_recognition as sr
+
+def rec(rate=16000):
+    r = sr.Recognizer()
+    with sr.Microphone(sample_rate=rate) as source:
+        print(&quot;please say something&quot;)
+        audio = r.listen(source)
+
+    with open(&quot;recording.wav&quot;, &quot;wb&quot;) as f:
+        f.write(audio.get_wav_data())
+
+# 百度API
+from aip import AipSpeech
+
+APP_ID = &#39;Your AppID&#39;
+API_KEY = &#39;Your API Key&#39;
+SECRET_KEY = &#39;Your Secret Key&#39;
+
+client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
+
+# 百度语音识别
+def listen():
+    with open(&#39;recording.wav&#39;, &#39;rb&#39;) as f:
+        audio_data = f.read()
+
+    result = client.asr(audio_data, &#39;wav&#39;, 16000, {
+        &#39;dev_pid&#39;: 1536,
+    })
+
+    result_text = result[&quot;result&quot;][0]
+
+    print(&quot;you said: &quot; + result_text)
+
+    return result_text
+
+# 百度语音合成
+def speak(text=&quot;&quot;):
+    result = client.synthesis(text, &#39;zh&#39;, 1, {
+        &#39;spd&#39;: 4,
+        &#39;vol&#39;: 5,
+        &#39;per&#39;: 4,
+    })
+
+    if not isinstance(result, dict):
+        with open(&#39;audio.mp3&#39;, &#39;wb&#39;) as f:
+            f.write(result)
+
+# 播放音频
+import pyaudio
+import wave
+import os
+import time
+def play():
+    os.system(&#39;sox audio.mp3 audio.wav&#39;)
+    wf = wave.open(&#39;audio.wav&#39;, &#39;rb&#39;)
+    p = pyaudio.PyAudio()
+
+    def callback(in_data, frame_count, time_info, status):
+        data = wf.readframes(frame_count)
+        return (data, pyaudio.paContinue)
+
+    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                    channels=wf.getnchannels(),
+                    rate=wf.getframerate(),
+                    output=True,
+                    stream_callback=callback)
+
+    stream.start_stream()
+
+    while stream.is_active():
+        time.sleep(0.1)
+
+    stream.stop_stream()
+    stream.close()
+    wf.close()
+
+    p.terminate()
+
+# 循环调用
+while True:
+    rec()
+    request = listen()
+    speak(request)
+    play()</code></pre>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.jianshu.com/p/283e72edee19" target="_blank" rel="noopener">用 Python 实现自己的智能语音助理（百度语音 + 图灵机器人）</a></p>
+</div><div class="post-copyright"><blockquote><p>原文作者: ababwbq</p><p>原文链接: <a href="https://www.unkaer.cf/pythonAI.html">https://www.unkaer.cf/pythonAI.html</a></p><p>版权声明: 转载请注明出处(必须保留原文作者署名原文链接)</p></blockquote></div><div class="tags"><a href="/tags/python/">python</a></div><div class="post-share"></div><div class="post-nav"><a href="/ARK.html" class="pre">方舟：生存进化开服教程</a><a href="/Motrix.html" class="next">Motrix</a></div><div id="comments"><div id="container"><script type="text/javascript" src="https://unpkg.com/gitalk/dist/gitalk.min.js?v=233"></script><script type="text/javascript" src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js?v=233"></script><script>var gitalk = new Gitalk({
+  clientID: '12c9a2f9d0145ff826a5',
+  clientSecret: '15e9c456632be76c5df7239cfa58b4327d0fffb8',
+  repo: 'unkaer.github.io',
+  owner: 'unkaer',
+  admin: ['unkaer'],
+  id: md5(window.location.pathname),
+  distractionFreeMode: false,
+  language: 'zh-CN',
+  pagerDirection: 'last'
+})
+gitalk.render('container')</script></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用-Python-调用百度语音"><span class="toc-text">用 Python 调用百度语音</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、整体结构"><span class="toc-text">一、整体结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、SpeechRecognition"><span class="toc-text">二、SpeechRecognition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-SpeechRecognition"><span class="toc-text">安装 SpeechRecognition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#录音代码"><span class="toc-text">录音代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、百度语音（STT）"><span class="toc-text">三、百度语音（STT）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建应用"><span class="toc-text">创建应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装百度API："><span class="toc-text">安装百度API：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语音识别代码如下（代码中的-Key-替换成自己的）："><span class="toc-text">语音识别代码如下（代码中的 Key 替换成自己的）：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、百度语音（TTS）"><span class="toc-text">四、百度语音（TTS）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#测试代码如下："><span class="toc-text">测试代码如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、PyAudio-播放"><span class="toc-text">五、PyAudio 播放</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-PyAudio"><span class="toc-text">安装 PyAudio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-sox"><span class="toc-text">安装 sox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码如下："><span class="toc-text">代码如下：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、最终代码"><span class="toc-text">六、最终代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol></li></ol></div><div class="about-widget"><a class="photo_background"><img src="https://gitee.com/Unkaer/blog/raw/master/images/material/20200129065505.webp"/></a><a href="/./about/" class="photo"><img src="https://gitee.com/Unkaer/blog/raw/master/images/portrait.webp"/></a><a class="text"><script>var r=parseInt(Math.floor(Math.random()*10)); arr=new Array(); arr[0]="生活不止眼前的枸杞,还有诗和远方"; arr[1]="世界上没有无缘无故的爱，也没有无缘无故的恨，却TM偏偏有无缘无故的胖！"; arr[2]="生活不止眼前的枸杞,还有诗和远方"; arr[3]="生活不止眼前的苟且，还有一辈子的苟且。"; arr[4]="悄悄地我吃了，正如我悄悄地胖。"; arr[5]="没有天生的高手，更没有永远的菜鸟"; arr[6]="我最大的缺点，就是缺点钱。"; arr[7]="可以不劳而获的，只有年纪和脂肪。"; arr[8]="选择比努力更重要，所以我选择不努力。"; arr[9]="谈钱伤感情，谈感情伤钱。";  document.write(arr[r]);</script></a></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/openwrt-xiaomi-r4a.html">小米RA4千兆版新手入坑指南</a></li><li class="post-list-item"><a class="post-list-link" href="/daan.html">答案助手</a></li><li class="post-list-item"><a class="post-list-link" href="/byhost.html">byet免费空间</a></li><li class="post-list-item"><a class="post-list-link" href="/music-heroku.html">heroku部署在线音乐站</a></li><li class="post-list-item"><a class="post-list-link" href="/phpstudy.html">phpstudy</a></li><li class="post-list-item"><a class="post-list-link" href="/jjwp.html">极简网盘</a></li><li class="post-list-item"><a class="post-list-link" href="/jx.html">XyPlayer4.0在线解析站，带后台</a></li><li class="post-list-item"><a class="post-list-link" href="/music.html">在线音乐播放</a></li><li class="post-list-item"><a class="post-list-link" href="/free.html">彩虹云免费虚拟主机</a></li><li class="post-list-item"><a class="post-list-link" href="/infinityfree-cloudflare.html">infinityfree免费空间绑定cloudflare免费CDN加速</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E7%AB%A0/">文章</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E8%B5%9A/">网赚</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6/">软件</a><span class="category-list-count">15</span></li></ul></div><div class="googlead-widget"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><!-- googlead01 --><ins style="display:block" data-ad-client="ca-pub-9517454423154476" data-ad-slot="1798098334" data-ad-format="auto" data-full-width-responsive="true" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/heroku/" style="font-size: 15px;">heroku</a> <a href="/tags/%E6%96%B9%E8%88%9F%EF%BC%9A%E7%94%9F%E5%AD%98%E8%BF%9B%E5%8C%96/" style="font-size: 15px;">方舟：生存进化</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/bluelake/" style="font-size: 15px;">bluelake</a> <a href="/tags/onedrive/" style="font-size: 15px;">onedrive</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/%E5%B1%80%E5%9F%9F%E7%BD%91/" style="font-size: 15px;">局域网</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/" style="font-size: 15px;">远程控制</a> <a href="/tags/Termux/" style="font-size: 15px;">Termux</a> <a href="/tags/%E7%BD%91%E9%80%9F/" style="font-size: 15px;">网速</a> <a href="/tags/VIP/" style="font-size: 15px;">VIP</a> <a href="/tags/%E8%A7%86%E9%A2%91/" style="font-size: 15px;">视频</a> <a href="/tags/kali/" style="font-size: 15px;">kali</a> <a href="/tags/233/" style="font-size: 15px;">233</a> <a href="/tags/aria2/" style="font-size: 15px;">aria2</a> <a href="/tags/wifi/" style="font-size: 15px;">wifi</a> <a href="/tags/arp/" style="font-size: 15px;">arp</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 15px;">脚本</a> <a href="/tags/%E5%85%8D%E8%B4%B9%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">免费空间</a> <a href="/tags/cloudflare/" style="font-size: 15px;">cloudflare</a> <a href="/tags/cdn/" style="font-size: 15px;">cdn</a> <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 15px;">科学上网</a> <a href="/tags/cyberpunk/" style="font-size: 15px;">cyberpunk</a> <a href="/tags/wallpaper/" style="font-size: 15px;">wallpaper</a> <a href="/tags/%E6%98%BE%E5%8D%A1/" style="font-size: 15px;">显卡</a> <a href="/tags/deepin/" style="font-size: 15px;">deepin</a> <a href="/tags/Ettercap/" style="font-size: 15px;">Ettercap</a> <a href="/tags/cms/" style="font-size: 15px;">cms</a> <a href="/tags/infinityfree/" style="font-size: 15px;">infinityfree</a> <a href="/tags/%E5%85%8D%E8%B4%B9/" style="font-size: 15px;">免费</a> <a href="/tags/%E4%BA%91%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">云空间</a> <a href="/tags/%E4%B8%8B%E8%BD%BD/" style="font-size: 15px;">下载</a> <a href="/tags/v2ray/" style="font-size: 15px;">v2ray</a> <a href="/tags/%E7%BD%91%E7%9B%98/" style="font-size: 15px;">网盘</a> <a href="/tags/%E8%A7%A3%E6%9E%90/" style="font-size: 15px;">解析</a> <a href="/tags/%E5%AF%86%E7%A0%81/" style="font-size: 15px;">密码</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 15px;">开源</a> <a href="/tags/libwebp/" style="font-size: 15px;">libwebp</a> <a href="/tags/webp/" style="font-size: 15px;">webp</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/mac/" style="font-size: 15px;">mac</a> <a href="/tags/MKOnlineMusicPlayer/" style="font-size: 15px;">MKOnlineMusicPlayer</a> <a href="/tags/openwrt/" style="font-size: 15px;">openwrt</a> <a href="/tags/phpstudy/" style="font-size: 15px;">phpstudy</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/ping/" style="font-size: 15px;">ping</a> <a href="/tags/%E8%BE%93%E5%85%A5%E6%B3%95/" style="font-size: 15px;">输入法</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 15px;">屏幕</a> <a href="/tags/ssh/" style="font-size: 15px;">ssh</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/vip/" style="font-size: 15px;">vip</a> <a href="/tags/%E4%BD%BF%E5%91%BD%E5%8F%AC%E5%94%A416/" style="font-size: 15px;">使命召唤16</a> <a href="/tags/%E5%9B%BE%E5%83%8F/" style="font-size: 15px;">图像</a> <a href="/tags/%E5%BE%AE%E4%BF%A1/" style="font-size: 15px;">微信</a> <a href="/tags/%E5%B0%8F%E5%8F%B7/" style="font-size: 15px;">小号</a> <a href="/tags/%E7%A0%B4%E8%A7%A3/" style="font-size: 15px;">破解</a> <a href="/tags/win10/" style="font-size: 15px;">win10</a> <a href="/tags/%E6%97%B6%E9%97%B4/" style="font-size: 15px;">时间</a> <a href="/tags/%E9%94%81%E5%B1%8F/" style="font-size: 15px;">锁屏</a> <a href="/tags/win7/" style="font-size: 15px;">win7</a> <a href="/tags/%E5%BE%AEPE%E5%B7%A5%E5%85%B7%E7%AE%B1/" style="font-size: 15px;">微PE工具箱</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/dplayer/" style="font-size: 15px;">dplayer</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">59</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">5</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://crazyzhang.cn" title="穗乃果 の 小窝 - GTA5小站" target="_blank">穗乃果 の 小窝 - GTA5小站</a><ul></ul><a href="https://www.sqlsec.com" title="国光" target="_blank">国光</a><ul></ul><a href="https://blog.daliansky.net" title="黑果小兵的部落" target="_blank">黑果小兵的部落</a><ul></ul><a href="https://chaooo.github.io/article/20161229.html" title="BlueLake博客主题的详细配置" target="_blank">BlueLake博客主题的详细配置</a><ul></ul><a href="https://unkaer.github.io" title="Z7的小站" target="_blank">Z7的小站</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p><span>Copyright &copy 2020 <a href="/." rel="nofollow">ababwbq.</a></span><span>ALL RIGHTS RESERVED.|<a rel="nofollow" target="_blank" href="https://tongji.baidu.com/web/10000045193/overview/index?siteId=14297073"> 网站统计</a></span></p><p><span><a id="sitetime"></a></span><script src="/js/settime.js"></script></p></div></div></div><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a051a5655f4a38112097d1a8d1dac208";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=233"></script><script type="text/javascript" src="/js/toctotop.js?v=233" async></script></body></html>

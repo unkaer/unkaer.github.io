@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个热衷分享有趣技术的小站，记录一些学习使用过的技术，并分享出来。尽可能的写的详细，少走一些坑，因为自己一步步学过来找到的资料都不是完整的、一条龙式的。"><meta name="keywords" content="技术,有趣,IT"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=233"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=233"><link rel="Shortcut Icon" href="https://gitee.com/Unkaer/blog/raw/master/images/favicon.webp"><link rel="bookmark" href="https://gitee.com/Unkaer/blog/raw/master/images/favicon.webp"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><script data-ad-client="ca-pub-9517454423154476" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script script type="text/javascript" src="/js/clicklove.js"></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/gitalk/dist/gitalk.css?v=233"><title>heroku+SwitchyOmega实现谷歌浏览器科学上网 | Z7的小站</title><meta name="generator" content="Hexo 4.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">heroku+SwitchyOmega实现谷歌浏览器科学上网</h1><a id="logo" href="/.">Z7的小站</a><p class="description">一个分享有趣技术的小站</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/wp/"><i class="fa fa-empty"> 网盘</i></a><a href="http://jx.unkaer.cf/" target="_blank" rel="noopener"><i class="fa fa-xie"> 在线视频站</i></a><a href="/guestbook/"><i class="fa fa-commt"> 留言</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/web/"><i class="fa fa-biao"> 导航</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">heroku+SwitchyOmega实现谷歌浏览器科学上网</h1><div class="post-meta"><a href="/heroku-SwitchyOmega.html#comments" class="comment-count"></a><p><span class="date">01 12，2020</span><span><a href="/categories/%E8%BD%AF%E4%BB%B6/" class="category">软件</a></span></p></div><div class="post-content"><p>heroku搭建代理+SwitchyOmega谷歌浏览器插件实现科学上网,自由登录谷歌，使用谷歌服务，浏览网页。但网速只有128kb/s，满足日常查资料使用。</p>
+<hr>
+<h1 id="shadowsocks-heroku"><a href="#shadowsocks-heroku" class="headerlink" title="shadowsocks-heroku"></a>shadowsocks-heroku</h1><p><a href="https://github.com/onplus/shadowsocks-heroku" target="_blank" rel="noopener">shadowsocks-heroku</a> 是可部署在 Heroku 平台的 ss 服务。但 <strong>ss-h不同于普通的ss，不能直接ss客户端使用</strong> 。<br>和 <a href="https://github.com/clowwindy/shadowsocks" target="_blank" rel="noopener">shadowsocks</a> 不同的是 shadowsocks-heroku 使用的 WebSocket 代替原本的 sockets。</p>
+<h2 id="如果遇到问题"><a href="#如果遇到问题" class="headerlink" title="如果遇到问题"></a>如果遇到问题</h2><ol>
+<li>请先检查是否遵循步骤（再次阅读一遍教程）</li>
+<li>请先自行通过Google/<a href="https://github.com/onplus/shadowsocks-heroku/search?utf8=%E2%9C%93&q=&type=" target="_blank" rel="noopener">Github</a>寻找答案</li>
+<li>如果还没有解决，欢迎通过<a href="https://github.com/onplus/shadowsocks-heroku/issues?q=is%3Aissue+is%3Aclosed+label%3Asolved" target="_blank" rel="noopener"> issue</a> 提问（贴日志和配置的时候注意隐藏密码&amp;个人ip）</li>
+</ol>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="1-注册-Heroku-帐号"><a href="#1-注册-Heroku-帐号" class="headerlink" title="1. 注册 Heroku 帐号"></a>1. 注册 Heroku 帐号</h3><p><a href="https://www.heroku.com/" target="_blank" rel="noopener">Heroku</a> 是一个支持多种编程语言的云平台即服务，<br>Heroku 提供免费账号，部分介绍如下：</p>
+<ul>
+<li>512 MB RAM per dyno</li>
+<li>Free apps sleep automatically after 30 mins of inactivity to conserve your dyno hours</li>
+<li>Free apps wake automatically when a web request is received</li>
+<li><a href="https://devcenter.heroku.com/articles/limits" target="_blank" rel="noopener">https://devcenter.heroku.com/articles/limits</a></li>
+<li><a href="https://devcenter.heroku.com/articles/free-dyno-hours#usage" target="_blank" rel="noopener">https://devcenter.heroku.com/articles/free-dyno-hours#usage</a></li>
+</ul>
+<p>注册地址：<a href="https://signup.heroku.com/" target="_blank" rel="noopener">https://signup.heroku.com/</a> （注册和部署过程可能需要梯子）</p>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><ol>
+<li><p>点击 <a href="https://heroku.com/deploy?template=https://github.com/onplus/shadowsocks-heroku/tree/re" target="_blank" rel="noopener"><img src="https://www.herokucdn.com/deploy/button.png" alt=""></a>，<a href="https://heroku.com/deploy?template=https://github.com/onplus/shadowsocks-heroku/tree/re" target="_blank" rel="noopener">一键部署到heroku</a></p>
+<p> 也可以选择另一个版本的服务端<a href="https://github.com/onplus/shadowsocks-websocket-python/blob/deploy/README.md" target="_blank" rel="noopener">shadowsocks-websocket-python</a>手机用户建议部署跨平台支持更好的<a href="https://github.com/onplus/v2hero" target="_blank" rel="noopener">v2ray</a></p>
+</li>
+<li><p>设置 加密算法和app 密码</p>
+</li>
+</ol>
+<p><img src="https://gitee.com/Unkaer/blog/raw/master/images/material/20200113181130.webp" alt=""></p>
+<p>支持的加密算法类型如下</p>
+<table>
+<thead>
+<tr>
+<th>Supported Ciphers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rc4</td>
+</tr>
+<tr>
+<td>rc4-md5</td>
+</tr>
+<tr>
+<td>table</td>
+</tr>
+<tr>
+<td>bf-cfb</td>
+</tr>
+<tr>
+<td>des-cfb</td>
+</tr>
+<tr>
+<td>idea-cfb</td>
+</tr>
+<tr>
+<td>seed-cfb</td>
+</tr>
+<tr>
+<td>cast5-cfb</td>
+</tr>
+<tr>
+<td>aes-128-cfb</td>
+</tr>
+<tr>
+<td>aes-192-cfb</td>
+</tr>
+<tr>
+<td>aes-256-cfb</td>
+</tr>
+<tr>
+<td>camellia-256-cfb</td>
+</tr>
+<tr>
+<td>camellia-192-cfb</td>
+</tr>
+<tr>
+<td>camellia-128-cfb</td>
+</tr>
+</tbody></table>
+<h2 id="启动本地-Client"><a href="#启动本地-Client" class="headerlink" title="启动本地 Client"></a>启动本地 Client</h2><p>1.<a href="https://github.com/onplus/shadowsocks-heroku/releases" target="_blank" rel="noopener">官方下载地址</a><br><a href="http://t.cn/A6vzzeO0" target="_blank" rel="noopener">蓝凑云下载地址</a> <br><br><img src="https://gitee.com/Unkaer/blog/raw/master/images/material/20200113161820.webp" alt=""></p>
+<p> 下载相应的版本，并放在适当的位置。<br>2. 修改config.json参数</p>
+<pre><code class="html">  &quot;server&quot;: &quot;unkaer.herokuapp.com&quot;,  //服务器地址,自己取得名字+.herokuapp.com
+  &quot;local_address&quot;: &quot;127.0.3.14&quot;, //本地代理地址，可自行修改
+  &quot;scheme&quot;: &quot;ws&quot;, 
+  &quot;local_port&quot;: &quot;233&quot;, //本地连接端口,可自行修改
+  &quot;remote_port&quot;: &quot;80&quot;, //服务器端口
+  &quot;password&quot;: &quot;password&quot;, //密码
+  &quot;timeout&quot;: 600, //超时
+  &quot;method&quot;: &quot;camellia-256-cfb&quot; //加密方式</code></pre>
+<ol start="3">
+<li>开启本地代理服务器</li>
+</ol>
+<p>运行 <code>ss-h.exe</code>会有命令行提示(推荐第一次时使用) 或 <code>start.vbs</code>后台静默 （推荐日常使用，或开机自启，方法见<a href="https://unkaer.github.io/2020/01/06/%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8B%A8%E5%8F%B7%E4%B8%8A%E7%BD%91/" target="_blank" rel="noopener">开机自动拨号上网</a>）</p>
+<ol start="4">
+<li><p>可更改运行图标，win托盘运行，更美观方便。见<a href="https://github.com/onplus/shadowsocks-heroku/issues/39" target="_blank" rel="noopener">win托盘工具taskbar.exe</a></p>
+</li>
+<li><p>启动成功，命令行显示：</p>
+<pre><code>server listening at { address: &#39;127.0.0.1&#39;, family: &#39;IPv4&#39;, port: 1080 }</code></pre></li>
+</ol>
+<h2 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h2><ol>
+<li><p>下载：Chrome 浏览器 <a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="noopener">SwitchyOmega</a> 插件</p>
+</li>
+<li><p>安装：打开浏览器的扩展程序页面 <code>chrome://extensions</code>，把 <code>SwitchyOmega.crx</code> 文件拖放到浏览器扩展程序页面安装 </p>
+</li>
+<li><p>配置：<br>添加SwitchyOmega代理服务器</p>
+<pre><code> 代理协议： SOCKS5 
+ 代理服务器local_address：127.0.3.14 
+ 代理端口local_port： 1080 </code></pre><p><img src="https://gitee.com/Unkaer/blog/raw/master/images/material/20200113182239.webp" alt=""><br>添加网络自动切换<br>切换规则<br>排序    条件类型     条件设置    情景模式    操作</p>
+</li>
+</ol>
+<p>raw.githubusercontent.com</p>
+<p>规则列表规则</p>
+<pre><code class="html">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</code></pre>
+<p><img src="https://gitee.com/Unkaer/blog/raw/master/images/material/20200113182334.webp" alt=""></p>
+<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><p>浏览器右上角，SwitchyOmega代理选择网络自动切换。</p>
+<h1 id="其他使用方案"><a href="#其他使用方案" class="headerlink" title="其他使用方案"></a>其他使用方案</h1><p>见<br><a href="https://unkaer.github.io/2020/01/12/heroku-Proxifier/" target="_blank" rel="noopener">heroku+Proxifier实现全局科学上网</a></p>
+</div><div class="post-copyright"><blockquote><p>原文作者: ababwbq</p><p>原文链接: <a href="https://www.unkaer.cf/heroku-SwitchyOmega.html">https://www.unkaer.cf/heroku-SwitchyOmega.html</a></p><p>版权声明: 转载请注明出处(必须保留原文作者署名原文链接)</p></blockquote></div><div class="tags"><a href="/tags/heroku/">heroku</a></div><div class="post-share"></div><div class="post-nav"><a href="/heroku-Proxifier.html" class="pre">Heroku+Proxifier实现全局科学上网</a><a href="/shouxin.html" class="next">手心输入法</a></div><div id="comments"><div id="container"><script type="text/javascript" src="https://unpkg.com/gitalk/dist/gitalk.min.js?v=233"></script><script type="text/javascript" src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js?v=233"></script><script>var gitalk = new Gitalk({
+  clientID: '12c9a2f9d0145ff826a5',
+  clientSecret: '15e9c456632be76c5df7239cfa58b4327d0fffb8',
+  repo: 'unkaer.github.io',
+  owner: 'unkaer',
+  admin: ['unkaer'],
+  id: md5(window.location.pathname),
+  distractionFreeMode: false,
+  language: 'zh-CN',
+  pagerDirection: 'last'
+})
+gitalk.render('container')</script></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shadowsocks-heroku"><span class="toc-text">shadowsocks-heroku</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#如果遇到问题"><span class="toc-text">如果遇到问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备"><span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-注册-Heroku-帐号"><span class="toc-text">1. 注册 Heroku 帐号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-text">部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动本地-Client"><span class="toc-text">启动本地 Client</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置代理"><span class="toc-text">配置代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始使用"><span class="toc-text">开始使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他使用方案"><span class="toc-text">其他使用方案</span></a></li></ol></div><div class="about-widget"><a class="photo_background"><img src="https://gitee.com/Unkaer/blog/raw/master/images/material/20200129065505.webp"/></a><a href="/./about/" class="photo"><img src="https://gitee.com/Unkaer/blog/raw/master/images/portrait.webp"/></a><a class="text"><script>var r=parseInt(Math.floor(Math.random()*10)); arr=new Array(); arr[0]="生活不止眼前的枸杞,还有诗和远方"; arr[1]="世界上没有无缘无故的爱，也没有无缘无故的恨，却TM偏偏有无缘无故的胖！"; arr[2]="生活不止眼前的枸杞,还有诗和远方"; arr[3]="生活不止眼前的苟且，还有一辈子的苟且。"; arr[4]="悄悄地我吃了，正如我悄悄地胖。"; arr[5]="没有天生的高手，更没有永远的菜鸟"; arr[6]="我最大的缺点，就是缺点钱。"; arr[7]="可以不劳而获的，只有年纪和脂肪。"; arr[8]="选择比努力更重要，所以我选择不努力。"; arr[9]="谈钱伤感情，谈感情伤钱。";  document.write(arr[r]);</script></a></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/openwrt-xiaomi-r4a.html">小米RA4千兆版新手入坑指南</a></li><li class="post-list-item"><a class="post-list-link" href="/daan.html">答案助手</a></li><li class="post-list-item"><a class="post-list-link" href="/byhost.html">byet免费空间</a></li><li class="post-list-item"><a class="post-list-link" href="/music-heroku.html">heroku部署在线音乐站</a></li><li class="post-list-item"><a class="post-list-link" href="/phpstudy.html">phpstudy</a></li><li class="post-list-item"><a class="post-list-link" href="/jjwp.html">极简网盘</a></li><li class="post-list-item"><a class="post-list-link" href="/jx.html">XyPlayer4.0在线解析站，带后台</a></li><li class="post-list-item"><a class="post-list-link" href="/music.html">在线音乐播放</a></li><li class="post-list-item"><a class="post-list-link" href="/free.html">彩虹云免费虚拟主机</a></li><li class="post-list-item"><a class="post-list-link" href="/infinityfree-cloudflare.html">infinityfree免费空间绑定cloudflare免费CDN加速</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%96%87%E7%AB%A0/">文章</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E8%B5%9A/">网赚</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6/">软件</a><span class="category-list-count">15</span></li></ul></div><div class="googlead-widget"><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><!-- googlead01 --><ins style="display:block" data-ad-client="ca-pub-9517454423154476" data-ad-slot="1798098334" data-ad-format="auto" data-full-width-responsive="true" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/heroku/" style="font-size: 15px;">heroku</a> <a href="/tags/%E6%96%B9%E8%88%9F%EF%BC%9A%E7%94%9F%E5%AD%98%E8%BF%9B%E5%8C%96/" style="font-size: 15px;">方舟：生存进化</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/bluelake/" style="font-size: 15px;">bluelake</a> <a href="/tags/onedrive/" style="font-size: 15px;">onedrive</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/%E5%B1%80%E5%9F%9F%E7%BD%91/" style="font-size: 15px;">局域网</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/" style="font-size: 15px;">远程控制</a> <a href="/tags/Termux/" style="font-size: 15px;">Termux</a> <a href="/tags/%E7%BD%91%E9%80%9F/" style="font-size: 15px;">网速</a> <a href="/tags/VIP/" style="font-size: 15px;">VIP</a> <a href="/tags/%E8%A7%86%E9%A2%91/" style="font-size: 15px;">视频</a> <a href="/tags/kali/" style="font-size: 15px;">kali</a> <a href="/tags/233/" style="font-size: 15px;">233</a> <a href="/tags/aria2/" style="font-size: 15px;">aria2</a> <a href="/tags/wifi/" style="font-size: 15px;">wifi</a> <a href="/tags/arp/" style="font-size: 15px;">arp</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 15px;">脚本</a> <a href="/tags/%E5%85%8D%E8%B4%B9%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">免费空间</a> <a href="/tags/cloudflare/" style="font-size: 15px;">cloudflare</a> <a href="/tags/cdn/" style="font-size: 15px;">cdn</a> <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" style="font-size: 15px;">科学上网</a> <a href="/tags/cyberpunk/" style="font-size: 15px;">cyberpunk</a> <a href="/tags/wallpaper/" style="font-size: 15px;">wallpaper</a> <a href="/tags/%E6%98%BE%E5%8D%A1/" style="font-size: 15px;">显卡</a> <a href="/tags/deepin/" style="font-size: 15px;">deepin</a> <a href="/tags/Ettercap/" style="font-size: 15px;">Ettercap</a> <a href="/tags/cms/" style="font-size: 15px;">cms</a> <a href="/tags/infinityfree/" style="font-size: 15px;">infinityfree</a> <a href="/tags/%E5%85%8D%E8%B4%B9/" style="font-size: 15px;">免费</a> <a href="/tags/%E4%BA%91%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">云空间</a> <a href="/tags/%E4%B8%8B%E8%BD%BD/" style="font-size: 15px;">下载</a> <a href="/tags/v2ray/" style="font-size: 15px;">v2ray</a> <a href="/tags/%E7%BD%91%E7%9B%98/" style="font-size: 15px;">网盘</a> <a href="/tags/%E8%A7%A3%E6%9E%90/" style="font-size: 15px;">解析</a> <a href="/tags/%E5%AF%86%E7%A0%81/" style="font-size: 15px;">密码</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 15px;">开源</a> <a href="/tags/libwebp/" style="font-size: 15px;">libwebp</a> <a href="/tags/webp/" style="font-size: 15px;">webp</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/mac/" style="font-size: 15px;">mac</a> <a href="/tags/MKOnlineMusicPlayer/" style="font-size: 15px;">MKOnlineMusicPlayer</a> <a href="/tags/openwrt/" style="font-size: 15px;">openwrt</a> <a href="/tags/phpstudy/" style="font-size: 15px;">phpstudy</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/ping/" style="font-size: 15px;">ping</a> <a href="/tags/%E8%BE%93%E5%85%A5%E6%B3%95/" style="font-size: 15px;">输入法</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 15px;">屏幕</a> <a href="/tags/ssh/" style="font-size: 15px;">ssh</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/vip/" style="font-size: 15px;">vip</a> <a href="/tags/%E4%BD%BF%E5%91%BD%E5%8F%AC%E5%94%A416/" style="font-size: 15px;">使命召唤16</a> <a href="/tags/%E5%9B%BE%E5%83%8F/" style="font-size: 15px;">图像</a> <a href="/tags/%E5%BE%AE%E4%BF%A1/" style="font-size: 15px;">微信</a> <a href="/tags/%E5%B0%8F%E5%8F%B7/" style="font-size: 15px;">小号</a> <a href="/tags/%E7%A0%B4%E8%A7%A3/" style="font-size: 15px;">破解</a> <a href="/tags/win10/" style="font-size: 15px;">win10</a> <a href="/tags/%E6%97%B6%E9%97%B4/" style="font-size: 15px;">时间</a> <a href="/tags/%E9%94%81%E5%B1%8F/" style="font-size: 15px;">锁屏</a> <a href="/tags/win7/" style="font-size: 15px;">win7</a> <a href="/tags/%E5%BE%AEPE%E5%B7%A5%E5%85%B7%E7%AE%B1/" style="font-size: 15px;">微PE工具箱</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/dplayer/" style="font-size: 15px;">dplayer</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">59</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a><span class="archive-list-count">5</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://crazyzhang.cn" title="穗乃果 の 小窝 - GTA5小站" target="_blank">穗乃果 の 小窝 - GTA5小站</a><ul></ul><a href="https://www.sqlsec.com" title="国光" target="_blank">国光</a><ul></ul><a href="https://blog.daliansky.net" title="黑果小兵的部落" target="_blank">黑果小兵的部落</a><ul></ul><a href="https://chaooo.github.io/article/20161229.html" title="BlueLake博客主题的详细配置" target="_blank">BlueLake博客主题的详细配置</a><ul></ul><a href="https://unkaer.github.io" title="Z7的小站" target="_blank">Z7的小站</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p><span>Copyright &copy 2020 <a href="/." rel="nofollow">ababwbq.</a></span><span>ALL RIGHTS RESERVED.|<a rel="nofollow" target="_blank" href="https://tongji.baidu.com/web/10000045193/overview/index?siteId=14297073"> 网站统计</a></span></p><p><span><a id="sitetime"></a></span><script src="/js/settime.js"></script></p></div></div></div><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a051a5655f4a38112097d1a8d1dac208";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=233"></script><script type="text/javascript" src="/js/toctotop.js?v=233" async></script></body></html>
